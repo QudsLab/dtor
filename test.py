@@ -1,3 +1,10 @@
+﻿import sys
+import io
+
+# Set UTF-8 encoding for stdout to handle Unicode characters on Windows
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+
 import time
 import platform
 from dtor import TorHandler
