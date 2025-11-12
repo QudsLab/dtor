@@ -18,7 +18,7 @@ Example:
     handler.start_tor_service()
 """
 
-__version__ = "0.0.4"
+__version__ = "0.0.6"
 __author__ = "Ahmad Yousuf"
 __email__ = "0xAhmadYousuf@protonmail.com"
 __license__ = "MIT"
