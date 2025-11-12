@@ -6,7 +6,7 @@ with open("requirements.txt") as f:
 
 setup(
     name="dtor",
-    version="0.0.3",
+    version="0.0.4",
     description="A Tor process management library",
     author="Ahmad Yousuf",
     author_email="0xAhmadYousuf@protonmail.com",
