@@ -154,7 +154,7 @@ else:
 # Test 12.2: Runtime Hidden Service
 print("Test 12.2: Add runtime hidden service")
 if handler.running:
-    result = handler.register_runtime_hidden_service(port=8888, target_port=8080, temporary=False)
+    result: bool | dict = handler.register_runtime_hidden_service(port=8888, target_port=8080, temporary=False)
     if result and isinstance(result, dict):
         print(f"✓ Added runtime hidden service")
         print(f"  - Onion address: {result['onion_address']}")
