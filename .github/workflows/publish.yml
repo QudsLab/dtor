@@ -21,7 +21,7 @@ jobs:
     - name: Extract version from setup.py
       id: get_version
       run: |
-        VERSION=$(python -c "import setuptools; exec(open('setup.py').read()); print(setuptools.setup_keywords['version'])")
+        VERSION=$(grep -oP '(?<=version=")[^\"]+' setup.py)
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "Package version: $VERSION"
     
