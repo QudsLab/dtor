@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Package version to test (e.g., 0.0.2)'
+        description: 'Package version to test (e.g., 0.0.3)'
         required: false
         default: 'latest'
 

@@ -21,7 +21,7 @@ jobs:
     - name: Extract version from setup.py
       id: get_version
       run: |
-        VERSION=$(python -c "exec(open('setup.py').read()); print([v for k, v in locals().items() if k == 'version'][0]) if 'version' in open('setup.py').read() else print(open('setup.py').read().split('version=\"')[1].split('\"')[0])")
+        VERSION=$(python -c "import setuptools; exec(open('setup.py').read()); print(setuptools.setup_keywords['version'])")
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "Package version: $VERSION"
     
@@ -29,7 +29,9 @@ jobs:
       id: check_version
       run: |
         VERSION="${{ steps.get_version.outputs.version }}"
-        if pip index versions dtor 2>/dev/null | grep -q "$VERSION"; then
+        PACKAGE_NAME="dtor"
+        RESPONSE=$(curl -s https://pypi.org/pypi/$PACKAGE_NAME/json)
+        if echo "$RESPONSE" | jq -e ".releases | has(\"$VERSION\")" > /dev/null; then
           echo "exists=true" >> $GITHUB_OUTPUT
           echo "Version $VERSION already exists on PyPI"
         else
