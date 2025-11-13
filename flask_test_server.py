@@ -103,7 +103,6 @@ HOME_TEMPLATE = """
 <body>
     <div class="container">
         <h1>🧅 Flask + Tor Server</h1>
-        
         {% if tor_status == 'running' %}
         <div class="status">
             <strong>✓ Server Status:</strong> Running on both clearnet and Tor
@@ -118,7 +117,6 @@ HOME_TEMPLATE = """
             <br><small>{{ error_message }}</small>
         </div>
         {% endif %}
-        
         <div class="info-box">
             <div><span class="label">Clearnet URL:</span> http://127.0.0.1:{{ port }}/</div>
             {% if onion_address %}
@@ -127,32 +125,25 @@ HOME_TEMPLATE = """
             <div><span class="label">Onion Address:</span> <em>Initializing...</em></div>
             {% endif %}
         </div>
-        
         <div class="endpoints">
             <h2>Available Endpoints:</h2>
-            
             <div class="endpoint">
                 <strong>GET /</strong> - This page
             </div>
-            
             <div class="endpoint">
                 <strong>GET /status</strong> - JSON status information
             </div>
-            
             <div class="endpoint">
                 <strong>GET /api/echo?message=hello</strong> - Echo test
             </div>
-            
             <div class="endpoint">
                 <strong>POST /api/data</strong> - Accept JSON data
                 <br><small>Example: <code>curl -X POST http://127.0.0.1:{{ port }}/api/data -H "Content-Type: application/json" -d '{"test":"data"}'</code></small>
             </div>
-            
             <div class="endpoint">
                 <strong>GET /api/time</strong> - Get current server time
             </div>
         </div>
-        
         <div style="margin-top: 30px; color: #666; font-size: 0.9em;">
             <strong>Note:</strong> To access the .onion address, you need Tor Browser or configure your application to use Tor SOCKS proxy.
         </div>
