@@ -19,7 +19,7 @@ from typing import Optional, Dict, List, Union, Tuple
 class TorHandler:
     """Comprehensive Tor process manager with full lifecycle control"""
     
-    def __init__(self, recover=True):
+    def __init__(self, recover=True, backup_dir=None):
         """Initialize TorHandler with directory paths
         Args:
             binary_dir: Directory for Tor binaries and data
@@ -31,7 +31,7 @@ class TorHandler:
         
         # Paths
         self.current_dir = Path(__file__).parent.resolve()
-        self.base_dir = 'tor_handler_files'
+        self.base_dir = self.get_cache_dir() if backup_dir is None else Path(backup_dir).resolve()
         self.binary_dir = Path(self.base_dir, "tor_binaries")
         self.cache_directory = Path(self.base_dir, "cache")
         self.data_directory = Path(self.binary_dir, "data")
@@ -124,6 +124,17 @@ class TorHandler:
                     print(f"[CRITICAL] Failed to write log: {log_err}")
     
     # ==================== PROCESS REGISTRY MANAGEMENT ====================
+    def get_cache_dir(self):
+        try:
+            home_cache = Path.home() / ".cache" / "tor"
+            home_cache.mkdir(parents=True, exist_ok=True)
+            test_file = home_cache / ".test"
+            test_file.touch()
+            test_file.unlink()
+            return home_cache
+        except (OSError, PermissionError):
+            return Path(__file__).parent / ".cache" / "tor"
+    
     def load_process_registry(self) -> List[Dict]:
         """Load the process registry from JSON file"""
         try:
